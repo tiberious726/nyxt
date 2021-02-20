@@ -829,6 +829,9 @@ requested a reload."
 (define-ffi-method ffi-minibuffer-evaluate-javascript ((window gtk-window) javascript)
   (webkit2:webkit-web-view-evaluate-javascript (minibuffer-view window) javascript))
 
+(define-ffi-method ffi-buffer-set-html ((buffer gtk-buffer) html &optional url)
+  (webkit:webkit-web-view-load-html (gtk-object buffer) html (or url (cffi:null-pointer))))
+
 (define-ffi-method ffi-buffer-enable-javascript ((buffer gtk-buffer) value)
   (setf (webkit:webkit-settings-enable-javascript
          (webkit:webkit-web-view-get-settings (gtk-object buffer)))

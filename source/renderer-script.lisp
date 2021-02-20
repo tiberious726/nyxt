@@ -74,11 +74,8 @@ The function can be passed ARGS."
    (ps:ps (ps:chain document
                     (write (ps:lisp content))))))
 
-(defun html-set (content &optional (buffer (current-buffer)))
-  (ffi-buffer-evaluate-javascript-async
-   buffer
-   (ps:ps (setf (ps:@ document body |innerHTML|)
-                (ps:lisp content)))))
+(defun html-set (content &optional (buffer (current-buffer)) url)
+  (ffi-buffer-set-html buffer content url))
 
 (defun html-set-style (style-string &optional (buffer (current-buffer)))
   (let ((style (markup:markup (:style style-string))))

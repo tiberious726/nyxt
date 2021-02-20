@@ -613,6 +613,13 @@ sometimes yields the wrong result."
 (define-ffi-generic ffi-buffer-evaluate-javascript (buffer javascript))
 (define-ffi-generic ffi-buffer-evaluate-javascript-async (buffer javascript))
 (define-ffi-generic ffi-minibuffer-evaluate-javascript (window javascript))
+(define-ffi-generic ffi-buffer-set-html (buffer html &optional url)
+  (:method ((buffer buffer) html &optional url)
+    (declare (ignore url))
+    (ffi-buffer-evaluate-javascript-async
+     buffer
+     (ps:ps (setf (ps:@ document body |innerHTML|)
+                  (ps:lisp html))))))
 (define-ffi-generic ffi-buffer-enable-javascript (buffer value))
 (define-ffi-generic ffi-buffer-enable-javascript-markup (buffer value))
 (define-ffi-generic ffi-buffer-enable-smooth-scrolling (buffer value))
